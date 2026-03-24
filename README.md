@@ -34,3 +34,66 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+test@test1.com
+123456
+
+<!-- Pendiente -->
+<!--
+Validar lógica backend primero ✅
+
+No complicarnos con auth completa aún ✅
+
+Avanzar rápido al core (prompt generator) ✅
+
+Próximos pasos inmediatos
+
+1️⃣ UI (Next.js)
+
+Pantalla de Prompt Generator
+
+Inputs: categoría, job, boosted, connects
+
+Mostrar resultado y guardar en PromptLog
+
+Gestión de categorías (admin)
+
+Crear/editar categorías
+
+Definir perfiles vinculados a cada categoría
+
+Dashboard de analytics
+
+Historial de prompts por usuario
+
+Métricas: % ganados, connects vs éxito, tipos de trabajos
+
+2️⃣ Futuro cercano / mejoras técnicas
+
+Autenticación completa: JWT, manejo de sesiones
+
+Integración IA: OpenAI API o modelos locales
+
+Analytics avanzado: KPIs, tendencias, predicción de éxito
+
+SaaS multiusuario real: suscripciones, límites de uso, roles avanzados
+
+Deploy: Vercel + base de datos en producción
+
+3️⃣ Observaciones estratégicas
+
+Estás pensando en escalabilidad desde el inicio, no solo en funcionalidad inmediata.
+
+Tu app ya puede servir más allá de Upwork, potencialmente para cualquier freelancer o agencia que quiera optimizar propuestas.
+
+La clave ahora será UI/UX y autenticación segura, porque la estructura backend ya es sólida.
+
+Considerar desde ya la separación de datos por usuario y límites de uso, ya que será esencial para SaaS.
+
+-->
+
+filtros
+
+favicon
+
+recuperar contraseña

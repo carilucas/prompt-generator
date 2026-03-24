@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String  @id @default(uuid())
+  email    String  @unique
+  password String // hash (nunca texto plano)
+  name     String?
+  role     Role    @default(USER)
+
+  emailVerified Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categories Category[]
+  prompts    PromptLog[]
+  lastLogin  DateTime?
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  key       String
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  prompts PromptLog[]
+  profile Profile?
+
+  @@unique([key, userId]) // evita duplicados por usuario
+}
+
+model Profile {
+  id         String @id @default(uuid())
+  experience String
+  roles      String
+  strength   String
+
+  categoryId String   @unique
+  category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model PromptLog {
+  id     String  @id @default(uuid())
+  title  String?
+  job    String
+  output String
+
+  boosted  Int?
+  connects Int?
+  answered Boolean? @default(false)
+  won      Boolean?
+  viewed   Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+}
