@@ -59,6 +59,9 @@ export function PromptForm({ categories }: { categories: Category[] }) {
 
     const data = await res.json();
     setResult(data.prompt);
+    setTitle("");
+    setJob("");
+    setCategoryId("");
   };
 
   return (

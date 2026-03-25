@@ -35,7 +35,7 @@ export function PromptTable({ prompts, total, page, limit }: any) {
       {/* TABLE */}
       <table className="w-full border border-gray-300 rounded">
         <thead>
-          <tr className="bg-gray-100 text-sm">
+          <tr className="bg-gray-100 text-[12px]">
             <th className="p-2 border border-gray-300">Date</th>
             <th className="p-2 border border-gray-300">Category</th>
             <th className="p-2 border border-gray-300">Job</th>

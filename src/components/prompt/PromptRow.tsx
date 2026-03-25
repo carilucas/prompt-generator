@@ -60,7 +60,7 @@ export function PromptRow({ prompt }: any) {
   }
 
   return (
-    <tr className="text-sm border-t">
+    <tr className="text-[12px] border-t">
       <td className="p-2 border border-gray-300">
         {new Date(prompt.category?.createdAt).toLocaleDateString("es-ES", {
           day: "2-digit",
