@@ -73,7 +73,7 @@ Rules:
 - Personalized first line
 - Use ✔️ bullet points
 - No generic phrases
-- Explain that Spanish is my native language, I can communicate in English in writing and if necessary we can do so orally considering that my level of spoken English is intermediate.
+- Explain that I communicate effectively in English, especially in writing, and I’m available for calls when needed to ensure smooth collaboration. Spanish is my native language. 
 - For the final CTA, don't suggest a call, it should be soft not agressive.  
 - End with Carlos Mora
 

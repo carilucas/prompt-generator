@@ -62,6 +62,14 @@ export function PromptRow({ prompt }: any) {
   return (
     <tr className="text-sm border-t">
       <td className="p-2 border border-gray-300">
+        {new Date(prompt.category?.createdAt).toLocaleDateString("es-ES", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        })}
+      </td>
+
+      <td className="p-2 border border-gray-300">
         {prompt.category?.name.charAt(0).toUpperCase() +
           prompt.category?.name.slice(1).toLowerCase()}
       </td>
