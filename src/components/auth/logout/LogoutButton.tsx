@@ -4,7 +4,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoLogOutOutline } from "react-icons/io5";
 
-export function LogoutButton() {
+interface LogoutButtonProps {
+  isOpen: boolean;
+}
+
+export function LogoutButton({ isOpen }: LogoutButtonProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   async function handleLogout() {
@@ -26,7 +30,7 @@ export function LogoutButton() {
       <div>
         <IoLogOutOutline className="text-red-500 text-2xl" />
       </div>
-      <div className="flex flex-col">
+      <div className={`${isOpen ? "block" : "hidden"}`}>
         <span className="text-lg font-bold leading-5 text-red-500 ">
           {loading ? "Logging out..." : "Logout"}
         </span>

@@ -1,5 +1,5 @@
 import { StatsCards, PromptTable } from "@/components/";
-import Charts from "@/components/stats/Charts";
+import { Charts } from "@/components/stats/ChartsClient";
 import { comparedStats } from "@/lib/comparedStats";
 import { getCurrentUser } from "@/lib/getCurrentUser";
 import { getStats } from "@/lib/getStats";

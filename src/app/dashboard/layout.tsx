@@ -18,7 +18,9 @@ export default async function DashboardLayout({
     <div className="bg-slate-100 overflow-y-scroll w-screen h-screen antialiased text-slate-300 selection:bg-blue-600 selection:text-white">
       <div className="flex">
         <Sidebar userInfo={userInfo} />
-        <main className="p-2 w-full text-slate-900 mt-6">{children}</main>
+        <main className="p-2 w-full max-w-100 md:max-w-130 lg:max-w-300 text-slate-900 mt-6">
+          {children}
+        </main>
       </div>
     </div>
   );

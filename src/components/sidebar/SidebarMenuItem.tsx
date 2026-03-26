@@ -8,6 +8,7 @@ interface SidebarMenuItemProps {
   title: string;
   description: string;
   icon: JSX.Element;
+  isOpen: boolean;
 }
 
 export const SidebarMenuItem = ({
@@ -15,16 +16,21 @@ export const SidebarMenuItem = ({
   title,
   description,
   icon,
+  isOpen,
 }: SidebarMenuItemProps) => {
   const pathName = usePathname();
 
   return (
     <Link
       href={path}
-      className={`${path === pathName && "bg-sky-800"} w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150`}
+      className={`${path === pathName && "bg-sky-800"} w-full space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150 inline-flex ${isOpen && "px-2"}`}
     >
-      <div>{icon}</div>
-      <div className="flex flex-col">
+      <div
+        className={`${!isOpen && "flex justify-center items-center m-0 w-full"}`}
+      >
+        {icon}
+      </div>
+      <div className={`flex flex-col ${!isOpen && "hidden"}`}>
         <span className="text-lg font-bold leading-5 text-white">{title}</span>
         <span className="text-sm text-white/50 hidden md:block">
           {description}

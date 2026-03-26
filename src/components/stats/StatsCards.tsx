@@ -7,7 +7,7 @@ type Metrics = {
 
 export function StatsCards({ metrics }: { metrics: Metrics }) {
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <Card title="Total Prompts" value={metrics.total} />
 
       <Card title="Viewed %" value={`${metrics.viewedRate.toFixed(1)}%`} />

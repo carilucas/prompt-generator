@@ -83,7 +83,7 @@ export function PromptRow({ prompt }: any) {
           type="number"
           value={boosted}
           onChange={(e) => setBoosted(Number(e.target.value))}
-          className="w-16 border border-gray-300 rounded px-1 m-auto block"
+          className={`w-16 border border-gray-300 rounded px-1 m-auto block${boosted > 0 ? " bg-sky-700 text-white" : ""}`}
           min={0}
         />
       </td>

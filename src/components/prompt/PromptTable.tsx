@@ -33,27 +33,28 @@ export function PromptTable({ prompts, total, page, limit }: any) {
       </select>
 
       {/* TABLE */}
-      <table className="w-full border border-gray-300 rounded">
-        <thead>
-          <tr className="bg-gray-100 text-[12px]">
-            <th className="p-2 border border-gray-300">Date</th>
-            <th className="p-2 border border-gray-300">Category</th>
-            <th className="p-2 border border-gray-300">Job</th>
-            <th className="p-2 border border-gray-300">Boosted</th>
-            <th className="p-2 border border-gray-300">Connects</th>
-            <th className="p-2 border border-gray-300">Viewed</th>
-            <th className="p-2 border border-gray-300">Answered</th>
-            <th className="p-2 border border-gray-300">Won</th>
-          </tr>
-        </thead>
+      <div className="overflow-x-auto">
+        <table className="w-full border border-gray-300 rounded max-w-150 md:max-w-300 lg:max-w-500">
+          <thead>
+            <tr className="bg-gray-100 text-[12px]">
+              <th className="p-2 border border-gray-300">Date</th>
+              <th className="p-2 border border-gray-300">Skill</th>
+              <th className="p-2 border border-gray-300">Job</th>
+              <th className="p-2 border border-gray-300">Boosted</th>
+              <th className="p-2 border border-gray-300">Connects</th>
+              <th className="p-2 border border-gray-300">Viewed</th>
+              <th className="p-2 border border-gray-300">Answered</th>
+              <th className="p-2 border border-gray-300">Won</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {prompts.map((p: any) => (
-            <PromptRow key={p.id} prompt={p} />
-          ))}
-        </tbody>
-      </table>
-
+          <tbody>
+            {prompts.map((p: any) => (
+              <PromptRow key={p.id} prompt={p} />
+            ))}
+          </tbody>
+        </table>
+      </div>
       {/* PAGINATION */}
       <div className="flex gap-2 mb-8">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
