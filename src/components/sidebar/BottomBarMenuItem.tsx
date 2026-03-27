@@ -24,7 +24,7 @@ export const BottomBarMenuItem = ({
     >
       <div>{icon}</div>
       <div className={`flex flex-col items-center justify-center`}>
-        <span className="text-sm  leading-5 text-white text-center">
+        <span className="text-[12px]  leading-5 text-white text-center">
           {title}
         </span>
       </div>
