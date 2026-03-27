@@ -11,7 +11,8 @@ import {
 } from "react-icons/io5";
 import { LogoutButton, SidebarMenuItem } from "@/components";
 import { IoMdClock } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const menuItems = [
   {
@@ -52,10 +53,20 @@ export const Sidebar = ({ userInfo }: SidebarProps) => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (isMobile) {
+      setIsOpen(false);
+    }
+
+    return () => setIsOpen(true);
+  }, [isMobile]);
+
   return (
     <div
       id="menu"
-      className={`max-w-15  min-h-screen bg-gray-900 text-slate-300 transition-all duration-300 ease-in-out fixed sm:relative top-0 left-0 ${isOpen && "max-w-75"}`}
+      className={`max-w-15  min-h-screen bg-gray-900 text-slate-300 transition-all duration-300 ease-in-out top-0 left-0 ${isOpen && "max-w-75"} ${isMobile && isOpen ? "fixed w-full z-10" : "relative"}`}
     >
       <div id="logo" className={`my-4 px-2 ${isOpen && "px-6"}`}>
         <h1
