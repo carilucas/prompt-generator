@@ -1,5 +1,7 @@
 export * from './sidebar/Sidebar'
 export * from './sidebar/SidebarMenuItem'
+export * from './sidebar/TopBar'
+export * from './sidebar/BottomBar'
 
 
 export * from './form/CategoryForm'

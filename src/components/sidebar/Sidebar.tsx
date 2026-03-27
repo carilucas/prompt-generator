@@ -66,7 +66,7 @@ export const Sidebar = ({ userInfo }: SidebarProps) => {
   return (
     <div
       id="menu"
-      className={`max-w-15  min-h-screen bg-gray-900 text-slate-300 transition-all duration-300 ease-in-out top-0 left-0 ${isOpen && "max-w-75"} ${isMobile && isOpen ? "fixed w-full z-10" : "relative"}`}
+      className={`hidden md:block max-w-15  min-h-screen bg-gray-900 text-slate-300 transition-all duration-300 ease-in-out top-0 left-0 ${isOpen && "max-w-75"} ${isMobile && isOpen ? "fixed w-full z-10" : "relative"}`}
     >
       <div id="logo" className={`my-4 px-2 ${isOpen && "px-6"}`}>
         <h1
@@ -102,9 +102,9 @@ export const Sidebar = ({ userInfo }: SidebarProps) => {
         {menuItems.map((item) => (
           <SidebarMenuItem key={item.path} {...item} isOpen={isOpen} />
         ))}
-        <LogoutButton isOpen={isOpen} />
+
         <div
-          className={`"bg-sky-800" w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150`}
+          className={`w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150`}
         >
           <div className="flex flex-col">
             <span className="text-lg font-bold leading-5 text-white cursor-pointer">
@@ -119,6 +119,7 @@ export const Sidebar = ({ userInfo }: SidebarProps) => {
             </span>
           </div>
         </div>
+        <LogoutButton isOpen={isOpen} />
       </div>
     </div>
   );

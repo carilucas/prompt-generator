@@ -5,7 +5,7 @@ import { useState } from "react";
 import { IoLogOutOutline } from "react-icons/io5";
 
 interface LogoutButtonProps {
-  isOpen: boolean;
+  isOpen?: boolean;
 }
 
 export function LogoutButton({ isOpen }: LogoutButtonProps) {
@@ -25,7 +25,7 @@ export function LogoutButton({ isOpen }: LogoutButtonProps) {
     <button
       onClick={handleLogout}
       disabled={loading}
-      className="w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150 cursor-pointer"
+      className="w-full px-2 inline-flex space-x-2 items-center py-3 hover:bg-white/5 transition ease-linear duration-150 cursor-pointer"
     >
       <div>
         <IoLogOutOutline className="text-red-500 text-2xl" />
