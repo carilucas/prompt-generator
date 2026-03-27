@@ -20,7 +20,7 @@ export default async function DashboardLayout({
       <TopBar />
       <div className="flex">
         <Sidebar userInfo={userInfo} />
-        <main className="p-2 w-full max-w-100 md:max-w-130 lg:max-w-300 text-slate-900 mt-6">
+        <main className="p-2 w-full max-w-190 md:max-w-200 lg:max-w-300 text-slate-900 mt-6 mb-30 md:mb-0">
           {children}
         </main>
       </div>
