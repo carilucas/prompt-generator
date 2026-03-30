@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
         if (!user) {
             return NextResponse.json(
-                { error: "Unauthorized" },
+                { message: "Unauthorized", ok: false },
                 { status: 401 }
             );
         }
@@ -22,9 +22,37 @@ export async function POST(req: Request) {
 
         if (!name || !key || !profile) {
             return NextResponse.json(
-                { error: "Missing fields" },
+                { message: "Missing fields", ok: false },
                 { status: 400 }
             );
+        }
+
+
+        const existingDeletedCategory = await prisma.category.findFirst({
+            where: { userId, key, deletedAt: { not: null } }
+        });
+
+        let category;
+        if (existingDeletedCategory) {
+            category = await prisma.category.update({
+                where: { id: existingDeletedCategory.id },
+                data: {
+                    deletedAt: null,
+                    profile: {
+                        update: {
+                            experience: profile.experience,
+                            roles: profile.roles,
+                            strength: profile.strength,
+                        },
+                    },
+                },
+            });
+            return NextResponse.json({
+                category,
+                message: 'Yeah! skill saved.',
+                ok: true
+            },
+                { status: 200 });
         }
 
         const existingCategory = await prisma.category.findFirst({
@@ -33,13 +61,12 @@ export async function POST(req: Request) {
 
         if (existingCategory) {
             return NextResponse.json(
-                { error: "Category key already exists for this user" },
+                { message: "You have already created this skill before.", ok: false },
                 { status: 400 }
             );
         }
 
-
-        const category = await prisma.category.create({
+        category = await prisma.category.create({
             data: {
                 name,
                 key,
@@ -53,12 +80,17 @@ export async function POST(req: Request) {
             },
         });
 
-        return NextResponse.json(category);
+        return NextResponse.json({
+            category,
+            message: 'Yeah! skill saved.',
+            ok: true
+        },
+            { status: 200 });
 
     } catch (error) {
 
         return NextResponse.json(
-            { error: "Error creating category" },
+            { message: "Error creating category", ok: false },
             { status: 500 }
         );
     }
@@ -66,20 +98,31 @@ export async function POST(req: Request) {
 
 
 export async function GET(req: Request) {
-    const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
+    try {
+        const { searchParams } = new URL(req.url);
+        const userId = searchParams.get("userId");
 
-    if (!userId) {
+        if (!userId) {
+            return NextResponse.json(
+                { message: "userId required", ok: false },
+                { status: 400 }
+            );
+        }
+
+        const categories = await prisma.category.findMany({
+            where: { userId },
+            orderBy: { createdAt: "desc" },
+        });
+
+        return NextResponse.json({
+            categories,
+            ok: true
+        });
+    } catch (error) {
         return NextResponse.json(
-            { error: "userId required" },
-            { status: 400 }
-        );
+            { message: "Unknown error", ok: false },
+            { status: 500 }
+        )
     }
 
-    const categories = await prisma.category.findMany({
-        where: { userId },
-        orderBy: { createdAt: "desc" },
-    });
-
-    return NextResponse.json(categories);
 }

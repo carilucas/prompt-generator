@@ -27,4 +27,6 @@ export * from './stats/CustomPieSlice'
 export * from './auth/login/LoginForm'
 export * from './auth/register/RegisterForm'
 export * from './auth/logout/LogoutButton'
+export * from './auth/reset-password/ResetPasswordForm'
+export * from './auth/forgot-password/ForgotPassword'
 

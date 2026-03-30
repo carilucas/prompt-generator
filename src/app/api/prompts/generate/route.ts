@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
         if (!user) {
             return NextResponse.json(
-                { error: "Unauthorized" },
+                { message: "Unauthorized", ok: false },
                 { status: 401 }
             );
         }
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
         if (!job || !categoryId || !title) {
             return NextResponse.json(
-                { error: "Missing required fields" },
+                { message: "Missing required fields", ok: false },
                 { status: 400 }
             );
         }
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
 
         if (!category) {
             return NextResponse.json(
-                { error: "Category not found" },
+                { message: "Category not found", ok: false },
                 { status: 404 }
             );
         }
@@ -93,15 +93,20 @@ Generate proposal:
             },
         });
 
-        return NextResponse.json({
-            prompt,
-            id: saved.id,
-        });
+        return NextResponse.json(
+            {
+                prompt,
+                id: saved.id,
+                message: 'Yeah! prompt saved',
+                ok: true
+            },
+            { status: 200 }
+        );
 
     } catch (error) {
         console.error(error);
         return NextResponse.json(
-            { error: "Error generating prompt" },
+            { message: "Error generating prompt", ok: false },
             { status: 500 }
         );
     }

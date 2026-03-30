@@ -11,7 +11,10 @@ export async function PATCH(req: Request, { params }: Props) {
     const user = await getCurrentUser();
 
     if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Unauthorized", ok: false },
+        { status: 401 },
+      );
     }
 
     const { boosted, connects, viewed, won, answered } = await req.json();
@@ -27,10 +30,13 @@ export async function PATCH(req: Request, { params }: Props) {
       },
     });
 
-    return NextResponse.json(updated);
+    return NextResponse.json(
+      { updated, message: "Prompt updated successfully", ok: true },
+      { status: 200 },
+    );
   } catch (error) {
     return NextResponse.json(
-      { error: "Error updating prompt" },
+      { message: "Error updating prompt", ok: false },
       { status: 500 },
     );
   }
@@ -43,11 +49,14 @@ interface DeleteProps {
 export async function DELETE(req: Request, { params }: DeleteProps) {
   try {
     const { id } = await params;
-    console.log(id);
+
     const user = await getCurrentUser();
 
     if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Unauthorized", ok: false },
+        { status: 401 },
+      );
     }
 
     const prompt = await prisma.promptLog.findUnique({
@@ -55,22 +64,31 @@ export async function DELETE(req: Request, { params }: DeleteProps) {
     });
 
     if (!prompt) {
-      return NextResponse.json({ error: "Not found" }, { status: 404 });
+      return NextResponse.json(
+        { message: "Prompt not found", ok: false },
+        { status: 404 },
+      );
     }
 
     // seguridad multi-user
     if (prompt.userId !== user.userId) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      return NextResponse.json(
+        { message: "Forbidden", ok: false },
+        { status: 403 },
+      );
     }
 
     await prisma.promptLog.delete({
       where: { id },
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(
+      { message: "Prompt deleted successfully", ok: true },
+      { status: 200 },
+    );
   } catch (error) {
     return NextResponse.json(
-      { error: "Error deleting prompt" },
+      { message: "Error deleting prompt", ok: false },
       { status: 500 },
     );
   }

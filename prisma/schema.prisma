@@ -27,6 +27,8 @@ model User {
   categories Category[]
   prompts    PromptLog[]
   lastLogin  DateTime?
+
+  passwordResetTokens PasswordResetToken[]
 }
 
 enum Role {
@@ -40,13 +42,16 @@ model Category {
   key       String
   createdAt DateTime @default(now())
 
+  deletedAt DateTime? // soft delete
+
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
   prompts PromptLog[]
   profile Profile?
 
-  @@unique([key, userId]) // evita duplicados por usuario
+  @@unique([key, userId, deletedAt]) // evita duplicados por usuario
+  @@index([userId, deletedAt]) // performance
 }
 
 model Profile {
@@ -78,4 +83,17 @@ model PromptLog {
 
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  tokenHash String
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([tokenHash])
+  @@index([userId])
 }

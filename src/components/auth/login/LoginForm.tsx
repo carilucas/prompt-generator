@@ -83,9 +83,9 @@ export function LoginForm() {
           </div>
 
           <div className="mb-6 text-blue-500">
-            <a href="#" className="hover:underline">
+            <Link href="/auth/forgot-password" className="hover:underline">
               Forgot Password?
-            </a>
+            </Link>
           </div>
 
           <button

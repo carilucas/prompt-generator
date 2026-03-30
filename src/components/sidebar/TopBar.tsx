@@ -3,10 +3,10 @@ import { LogoutButton } from "../auth/logout/LogoutButton";
 
 export const TopBar = () => {
   return (
-    <div className="md:hidden bg-gray-900 text-slate-300 px-4 py-1 flex items-center justify-between">
+    <div className="md:hidden bg-gray-900 text-slate-300 px-4 py-2 flex items-center justify-between">
       <div id="logo">
         <h1
-          className={`text-lg md:text-2xl font-bold text-white flex justify-start  items-center gap-2`}
+          className={`text-lg font-bold text-white flex justify-start  items-center gap-2`}
         >
           <div className="flex justify-center items-center">
             <IoLogoReact className="text-3xl" />

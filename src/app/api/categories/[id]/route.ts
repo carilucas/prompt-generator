@@ -7,6 +7,8 @@ interface Props {
     params: Promise<{ id: string }>;
 }
 
+
+
 export async function PATCH(
     req: Request,
     { params }: Props
@@ -16,7 +18,7 @@ export async function PATCH(
 
         if (!user) {
             return NextResponse.json(
-                { error: "Unauthorized" },
+                { message: "Unauthorized", ok: false },
                 { status: 401 }
             );
         }
@@ -27,7 +29,7 @@ export async function PATCH(
         const { id } = await params;
         if (!name || !key || !profile) {
             return NextResponse.json(
-                { error: "Missing fields" },
+                { message: "Missing fields", ok: false },
                 { status: 400 }
             );
         }
@@ -48,12 +50,62 @@ export async function PATCH(
             include: { profile: true },
         });
 
-        return NextResponse.json(updatedCategory);
+        return NextResponse.json({
+            updatedCategory,
+            message: 'Yeah! skill updated.',
+            ok: true
+        },
+            { status: 200 }
+        );
 
     } catch (error) {
         console.error(error);
         return NextResponse.json(
-            { error: "Error updating category" },
+            { message: "Error updating category", ok: false },
+            { status: 500 }
+        );
+    }
+}
+
+
+export async function DELETE(
+    req: Request,
+    { params }: Props
+) {
+    try {
+
+        const { id } = await params;
+        const user = await getCurrentUser();
+        if (!user) {
+            return NextResponse.json(
+                { message: "Unauthorized", ok: false },
+                { status: 401 }
+            );
+        }
+
+
+        const category = await prisma.category.update({
+            where: {
+                id: id,
+                userId: user.userId,
+            },
+            data: {
+                deletedAt: new Date(),
+            },
+        });
+
+        return NextResponse.json({
+            category,
+            message: 'Skill deleted',
+            ok: true,
+        },
+            { status: 200 }
+        );
+
+    } catch (error) {
+        console.log(error)
+        return NextResponse.json(
+            { message: "Error deleting category", ok: false },
             { status: 500 }
         );
     }

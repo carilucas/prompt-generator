@@ -71,11 +71,11 @@ export function CategoryForm({ category, userId }: Props) {
     });
 
     const data = await res.json();
-
+    console.log(data);
     Swal.fire({
-      title: "Yeah! category saved",
+      title: data.message,
       text: "Would you like to continue editing?",
-      icon: "success",
+      icon: data.ok ? "success" : "error",
       showCancelButton: true,
       confirmButtonColor: "#024a70",
       cancelButtonColor: "#1e2939",
