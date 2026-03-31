@@ -11,6 +11,7 @@ export * from './form/FormField'
 export * from './form/PromptForm'
 export * from './form/Select'
 export * from './form/CheckBox'
+export * from './form/PasswordInput'
 
 
 export * from './categories/CategoryList'
@@ -29,4 +30,6 @@ export * from './auth/register/RegisterForm'
 export * from './auth/logout/LogoutButton'
 export * from './auth/reset-password/ResetPasswordForm'
 export * from './auth/forgot-password/ForgotPassword'
+
+export * from './ui/PasswordStrength'
 

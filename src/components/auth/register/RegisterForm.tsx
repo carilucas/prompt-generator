@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/lib/validations/registerSchema";
 import { z } from "zod";
 import Link from "next/link";
+import { PasswordInput } from "@/components";
 
 type FormData = z.infer<typeof registerSchema>;
 
@@ -86,35 +87,20 @@ export const RegisterForm = () => {
             )}
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-600">
-              Password
-            </label>
-            <input
-              type="password"
-              {...register("password")}
-              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password.message}</p>
-            )}
-          </div>
+          <PasswordInput
+            label="Password"
+            id="password"
+            register={register("password")}
+            error={errors.password?.message}
+            showStrength
+          />
 
-          <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block text-gray-600">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              {...register("confirmPassword")}
-              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-            />
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-sm">
-                {errors.confirmPassword.message}
-              </p>
-            )}
-          </div>
+          <PasswordInput
+            label="Confirm password"
+            id="confirmPassword"
+            register={register("confirmPassword")}
+            error={errors.confirmPassword?.message}
+          />
 
           <div className="mb-4 flex items-center">
             <input
