@@ -1,99 +1,152 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 10 Prompt Generator
 
-## Getting Started
+Aplicación web para generar y gestionar prompts para LinkedIn. Construida con Next.js, Prisma y PostgreSQL.
 
-First, run the development server:
+## Requisitos Previos
+
+- Node.js 20+
+- Docker y Docker Compose
+- PostgreSQL (local o cloud)
+
+## Configuración del Entorno
+
+1. Clonar el repositorio:
+
+```bash
+git clone <repo-url>
+cd 10-prompt-generator
+```
+
+2. Instalar dependencias:
+
+```bash
+npm install
+```
+
+3. Configurar variables de entorno:
+
+```bash
+cp .env.example .env
+```
+
+Edita `.env` con tus valores:
+
+```env
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/promptgenerator"
+NEXT_PUBLIC_API_URL="http://localhost:3000"
+RESEND_API_KEY="tu_api_key_de_resend"
+```
+
+## Desarrollo
+
+### 1. Iniciar la base de datos (Docker)
+
+```bash
+docker-compose up -d
+```
+
+Esto inicia un contenedor PostgreSQL en el puerto 5432.
+
+### 2. Ejecutar migraciones de Prisma
+
+```bash
+npx prisma migrate dev --name init
+```
+
+### 3. Iniciar el servidor de desarrollo
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La aplicación estará disponible en: http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Construcción (Build)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Desarrollo
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Producción
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Generar el cliente de Prisma:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npx prisma generate
+```
 
-## Deploy on Vercel
+2. Construir la aplicación:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Iniciar en producción:
 
-test@test1.com
-123456
+```bash
+npm run start
+```
 
-<!-- Pendiente -->
-<!--
-Validar lógica backend primero ✅
+## Despliegue
 
-No complicarnos con auth completa aún ✅
+### Render / VPS
 
-Avanzar rápido al core (prompt generator) ✅
+1. Configurar variables de entorno en el proveedor:
+   - `DATABASE_URL`: URL de PostgreSQL (Render, Supabase, Neon, etc.)
+   - `RESEND_API_KEY`: Clave de API de Resend
 
-Próximos pasos inmediatos
+2. Ejecutar migraciones:
 
-1️⃣ UI (Next.js)
+```bash
+npx prisma migrate deploy
+```
 
-Pantalla de Prompt Generator
+3. Construir y iniciar:
 
-Inputs: categoría, job, boosted, connects
+```bash
+npm run build
+npm run start
+```
 
-Mostrar resultado y guardar en PromptLog
+### Vercel (Recomendado)
 
-Gestión de categorías (admin)
+1. Conectar el repositorio a Vercel
+2. Configurar las variables de entorno en el panel de Vercel
+3. Deploy automático en cada push a main
 
-Crear/editar categorías
+## Comandos Disponibles
 
-Definir perfiles vinculados a cada categoría
+| Comando             | Descripción                    |
+| ------------------- | ------------------------------ |
+| `npm run dev`       | Iniciar servidor de desarrollo |
+| `npm run build`     | Construir aplicación           |
+| `npm run start`     | Iniciar en producción          |
+| `npm run lint`      | Ejecutar linter                |
+| `npx prisma studio` | Abrir GUI de Prisma            |
 
-Dashboard de analytics
+## Estructura del Proyecto
 
-Historial de prompts por usuario
+```
+├── prisma/              # Schema y migraciones de BD
+├── src/
+│   ├── app/             # App Router de Next.js
+│   ├── components/      # Componentes React
+│   ├── lib/            # Utilidades y lógica de negocio
+│   └── data.ts         # Datos estáticos
+├── docker-compose.yml  # Configuración de PostgreSQL
+└── package.json        # Dependencias del proyecto
+```
 
-Métricas: % ganados, connects vs éxito, tipos de trabajos
+## Licencia
 
-2️⃣ Futuro cercano / mejoras técnicas
+MIT
 
-Autenticación completa: JWT, manejo de sesiones
+## Test user
 
-Integración IA: OpenAI API o modelos locales
+```
+user: test@test1.com
+pass: 123456
 
-Analytics avanzado: KPIs, tendencias, predicción de éxito
-
-SaaS multiusuario real: suscripciones, límites de uso, roles avanzados
-
-Deploy: Vercel + base de datos en producción
-
-3️⃣ Observaciones estratégicas
-
-Estás pensando en escalabilidad desde el inicio, no solo en funcionalidad inmediata.
-
-Tu app ya puede servir más allá de Upwork, potencialmente para cualquier freelancer o agencia que quiera optimizar propuestas.
-
-La clave ahora será UI/UX y autenticación segura, porque la estructura backend ya es sólida.
-
-Considerar desde ya la separación de datos por usuario y límites de uso, ya que será esencial para SaaS.
-
--->
-
-filtros
-
-favicon
-
-recuperar contraseña
+```
