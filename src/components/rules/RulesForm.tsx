@@ -32,10 +32,12 @@ export function RulesForm() {
       const res = await fetch("/api/rules");
       const data = await res.json();
       if (data.ok && data.rules.length > 0) {
-        setRules(data.rules.map((r: { id: string; content: string }) => ({
-          id: r.id,
-          content: r.content,
-        })));
+        setRules(
+          data.rules.map((r: { id: string; content: string }) => ({
+            id: r.id,
+            content: r.content,
+          })),
+        );
       } else {
         setRules(DEFAULT_RULES.map((content) => ({ content })));
       }
@@ -144,7 +146,7 @@ export function RulesForm() {
           <button
             type="button"
             onClick={addRule}
-            className="px-3 py-1.5 text-sm bg-gray-900 text-white hover:bg-gray-800 transition-colors cursor-pointer"
+            className="px-3 py-1.5 text-sm bg-sky-900 text-white hover:bg-gray-800 transition-colors cursor-pointer"
           >
             + Add Rule
           </button>
@@ -201,7 +203,7 @@ export function RulesForm() {
       <div className="flex justify-end pt-4">
         <button
           type="submit"
-          className="bg-gray-900 text-white px-6 py-2.5 hover:bg-gray-800 transition-colors cursor-pointer"
+          className="bg-sky-900 text-white px-6 py-2.5 hover:bg-gray-800 transition-colors cursor-pointer"
         >
           Save Rules
         </button>

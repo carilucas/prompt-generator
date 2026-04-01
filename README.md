@@ -150,3 +150,9 @@ user: test@test1.com
 pass: 123456
 
 ```
+
+## TODOS
+
+```
+Filtros por categoria
+```

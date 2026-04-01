@@ -6,6 +6,7 @@ import { loginSchema } from "@/lib";
 import { z } from "zod";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import { PasswordInput } from "@/components/form/PasswordInput";
 
 type FormData = z.infer<typeof loginSchema>;
 
@@ -58,17 +59,13 @@ export function LoginForm() {
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-600">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              {...register("password")}
-              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-            />
-          </div>
+          <PasswordInput
+            id="password"
+            label="Password"
+            error={errors.password?.message}
+            register={register("password")}
+            showStrength={false}
+          />
 
           <div className="mb-4 flex items-center">
             <input
