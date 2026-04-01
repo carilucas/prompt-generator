@@ -8,6 +8,7 @@ import {
   IoChevronForwardCircleOutline,
   IoLogoReact,
   IoStatsChartOutline,
+  IoListOutline,
 } from "react-icons/io5";
 import { LogoutButton, SidebarMenuItem } from "@/components";
 import { IoMdClock } from "react-icons/io";
@@ -38,6 +39,12 @@ const menuItems = [
     icon: <IoMdClock size={40} />,
     title: "History",
     description: "Visualiza el historial de tus prompts",
+  },
+  {
+    path: "/dashboard/rules",
+    icon: <IoListOutline size={40} />,
+    title: "Rules",
+    description: "Configura las reglas de tus prompts",
   },
 ];
 
@@ -78,7 +85,7 @@ export const Sidebar = ({ userInfo }: SidebarProps) => {
           <span className={` ${isOpen ? "block" : "hidden"}`}>UPG</span>
         </h1>
         <p className={`text-slate-500 text-sm  ${isOpen ? "block" : "hidden"}`}>
-          Upwork Promt Generator
+          Upwork Prompt Generator
         </p>
       </div>
       <div id="profile" className={`px-6 py-6 ${isOpen ? "block" : "hidden"}`}>

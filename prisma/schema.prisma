@@ -26,6 +26,7 @@ model User {
 
   categories Category[]
   prompts    PromptLog[]
+  rules      Rule[]
   lastLogin  DateTime?
 
   passwordResetTokens PasswordResetToken[]
@@ -95,5 +96,18 @@ model PasswordResetToken {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([tokenHash])
+  @@index([userId])
+}
+
+model Rule {
+  id        String   @id @default(uuid())
+  content   String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId])
 }

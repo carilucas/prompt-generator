@@ -51,6 +51,20 @@ export async function POST(req: Request) {
 `
             : "";
 
+        // 📋 Obtener reglas del usuario
+        const rulesDB = await prisma.rule.findMany({
+            where: { userId: user.userId },
+            orderBy: { order: "asc" },
+        });
+
+        const rulesText = rulesDB.length > 0
+            ? rulesDB.map(r => `- ${r.content}`).join("\n")
+            : `- Start with a greeting in english
+- Max 150 words
+- Personalized first line
+- Use ✔️ bullet points
+- No generic phrases`;
+
         // 🧠 Generar prompt
         const prompt =
             `You are an expert in Upwork proposals.
@@ -68,14 +82,8 @@ My profile:
 ${profileText}
 
 Rules:
-- Start with a gretting in english
-- Max 150 words
-- Personalized first line
-- Use ✔️ bullet points
-- No generic phrases
-- Explain that I communicate effectively in English, especially in writing, and I’m available for calls when needed to ensure smooth collaboration. Spanish is my native language. 
-- For the final CTA, don't suggest a call, it should be soft not agressive.  
-- End with Carlos Mora
+${rulesText}
+
 
 Generate proposal:
 `;

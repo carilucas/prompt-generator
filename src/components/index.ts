@@ -33,3 +33,5 @@ export * from './auth/forgot-password/ForgotPassword'
 
 export * from './ui/PasswordStrength'
 
+export * from './rules/RulesForm'
+

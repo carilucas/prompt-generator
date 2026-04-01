@@ -78,8 +78,8 @@ export function PromptForm({ categories }: { categories: Category[] }) {
       <FormField label="Job Title">
         <Input
           value={title}
-          disabled={true}
-          example="auto-generated"
+          disabled={false}
+          example="Website creation and SEO"
           onChange={setTitle}
         />
       </FormField>

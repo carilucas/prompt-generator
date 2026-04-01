@@ -5,6 +5,7 @@ import {
   IoAppsOutline,
   IoBrowsersOutline,
   IoStatsChartOutline,
+  IoListOutline,
 } from "react-icons/io5";
 import { BottomBarMenuItem } from "./BottomBarMenuItem";
 
@@ -32,6 +33,12 @@ const menuItems = [
     icon: <IoMdClock size={20} />,
     title: "History",
     description: "Visualiza el historial de tus prompts",
+  },
+  {
+    path: "/dashboard/rules",
+    icon: <IoListOutline size={20} />,
+    title: "Rules",
+    description: "Configura las reglas de tus prompts",
   },
 ];
 
