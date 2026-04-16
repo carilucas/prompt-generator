@@ -10,10 +10,10 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const user = await getCurrentUser();
-  if (!user) {
+  const userInfo = await getUserInfo(user.userId);
+  if (!user || !userInfo) {
     redirect("/auth/login");
   }
-  const userInfo = await getUserInfo(user.userId);
 
   return (
     <div className="bg-slate-100 overflow-y-scroll w-screen h-screen antialiased text-slate-300 selection:bg-blue-600 selection:text-white">

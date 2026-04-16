@@ -21,24 +21,26 @@ export function PromptForm({ categories }: { categories: Category[] }) {
   const [title, setTitle] = useState("");
   const [job, setJob] = useState("");
 
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState({ a: "", b: "" });
 
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<"A" | "B" | null>(null);
 
-  const handleCopy = async () => {
+  const handleCopy = async (text: string, type: "A" | "B") => {
     try {
-      await navigator.clipboard.writeText(result);
-      setCopied(true);
+      await navigator.clipboard.writeText(text);
+      setCopied(type);
 
       setTimeout(() => {
-        setCopied(false);
+        setCopied(null);
       }, 2000);
     } catch (err) {
       console.error("Failed to copy:", err);
     }
   };
 
-  const handleGenerate = async () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleGenerateProposal = async () => {
     if (!categoryId || !job || !title) {
       Swal.fire({
         title: "The Fields?",
@@ -48,20 +50,54 @@ export function PromptForm({ categories }: { categories: Category[] }) {
       return;
     }
 
-    const res = await fetch("/api/prompts/generate", {
-      method: "POST",
-      body: JSON.stringify({
-        categoryId,
-        title,
-        job,
-      }),
-    });
+    try {
+      setLoading(true);
 
-    const data = await res.json();
-    setResult(data.prompt);
-    setTitle("");
-    setJob("");
-    setCategoryId("");
+      // Generar prompt
+      const promptRes = await fetch("/api/prompts/generate", {
+        method: "POST",
+        body: JSON.stringify({
+          categoryId,
+          title,
+          job,
+        }),
+      });
+
+      const promptData = await promptRes.json();
+
+      if (!promptData.ok) {
+        throw new Error("Error generating prompt");
+      }
+
+      // Generar propuesta con IA
+      const aiRes = await fetch("/api/ai/generate", {
+        method: "POST",
+        body: JSON.stringify({
+          prompt: promptData.prompt,
+        }),
+      });
+
+      const aiData = await aiRes.json();
+
+      if (!aiData.ok) {
+        throw new Error("Error generating proposal");
+      }
+
+      // Mostrar propuesta (NO prompt)
+      setResult({
+        a: aiData.proposalA,
+        b: aiData.proposalB,
+      });
+
+      // limpiar form
+      setTitle("");
+      setJob("");
+      setCategoryId("");
+    } catch (error) {
+      Swal.fire("Error", "Something went wrong", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -95,32 +131,38 @@ export function PromptForm({ categories }: { categories: Category[] }) {
 
       {/* BUTTON */}
       <button
-        onClick={handleGenerate}
+        onClick={handleGenerateProposal}
         className="bg-sky-900 text-white px-4 py-2 cursor-pointer"
       >
-        Generate Prompt
+        {loading ? "Generating..." : "Generate Proposal"}
       </button>
 
       {/* RESULT */}
       {result && (
-        <div className="border p-4 whitespace-pre-wrap border-gray-300 rounded mb-10 bg-gray-100">
-          <div className="flex justify-between items-center mb-3">
-            <p className="font-semibold">Generated Prompt</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          {/* Proposal A */}
+          <div className="border p-4 bg-gray-100 rounded">
+            <p className="font-semibold mb-2">Option A</p>
+            <div className="text-sm whitespace-pre-wrap">{result.a}</div>
 
             <button
-              onClick={handleCopy}
-              className="text-sm bg-sky-900 px-4 py-1 text-white cursor-pointer rounded"
+              onClick={() => handleCopy(result.a, "A")}
+              className="mt-3 bg-sky-900 text-white px-3 py-1 rounded cursor-pointer"
             >
-              {copied ? "Copied!" : "Copy"}
+              {copied === "A" ? "Copied!" : "Copy"}
             </button>
           </div>
-          <div className="whitespace-pre-wrap text-sm">{result}</div>
-          <div className="flex justify-between items-center my-3">
+
+          {/* Proposal B */}
+          <div className="border p-4 bg-gray-100 rounded">
+            <p className="font-semibold mb-2">Option B</p>
+            <div className="text-sm whitespace-pre-wrap">{result.b}</div>
+
             <button
-              onClick={handleCopy}
-              className="text-sm bg-sky-900 px-4 py-1 text-white cursor-pointer rounded"
+              onClick={() => handleCopy(result.b, "B")}
+              className="mt-3 bg-sky-900 text-white px-3 py-1 rounded cursor-pointer"
             >
-              {copied ? "Copied!" : "Copy"}
+              {copied === "B" ? "Copied!" : "Copy"}
             </button>
           </div>
         </div>
