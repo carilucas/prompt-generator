@@ -47,8 +47,8 @@ export async function POST(req: Request) {
             );
 
             const data = await res.json();
-            console.log("MODEL:", model);
-            console.log("RESPONSE:", data);
+            // console.log("MODEL:", model);
+            // console.log("RESPONSE:", data);
             return data?.choices?.[0]?.message?.content || null;
         };
 
