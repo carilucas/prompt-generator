@@ -141,7 +141,7 @@ export function PromptForm({ categories }: { categories: Category[] }) {
       {result && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           {/* Proposal A */}
-          <div className="border p-4 bg-gray-100 rounded">
+          <div className="border p-4 bg-gray-100 rounded border-gray-300">
             <p className="font-semibold mb-2">Option A</p>
             <div className="text-sm whitespace-pre-wrap">{result.a}</div>
 
@@ -154,7 +154,7 @@ export function PromptForm({ categories }: { categories: Category[] }) {
           </div>
 
           {/* Proposal B */}
-          <div className="border p-4 bg-gray-100 rounded">
+          <div className="border p-4 bg-gray-100 rounded border-gray-300">
             <p className="font-semibold mb-2">Option B</p>
             <div className="text-sm whitespace-pre-wrap">{result.b}</div>
 

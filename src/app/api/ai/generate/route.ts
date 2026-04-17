@@ -1,7 +1,16 @@
+import { getCurrentUser } from "@/lib/getCurrentUser";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
+        const user = await getCurrentUser();
+
+        if (!user) {
+            return NextResponse.json(
+                { message: "Unauthorized", ok: false },
+                { status: 401 }
+            );
+        }
         const { prompt } = await req.json();
 
         if (!prompt) {
@@ -38,8 +47,8 @@ export async function POST(req: Request) {
             );
 
             const data = await res.json();
-            console.log("MODEL:", model);
-            console.log("RESPONSE:", data);
+            // console.log("MODEL:", model);
+            // console.log("RESPONSE:", data);
             return data?.choices?.[0]?.message?.content || null;
         };
 
